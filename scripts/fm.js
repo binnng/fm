@@ -87,7 +87,11 @@ audio = (function() {
     return icon.className = '';
   };
   setCover = function() {
-    return player.setAttribute('style', 'background-image: url(' + musicList[currentMusicOrder]['cover'] + ');');
+    var cover;
+    cover = musicList[currentMusicOrder]['cover'];
+    if (cover) {
+      return player.setAttribute('style', 'background-image: url(' + cover + ');');
+    }
   };
   _audio.play = function(isPaused) {
     if (isPaused) {
@@ -140,19 +144,14 @@ playOrPause = function() {
 };
 
 getScript("" + STATIC_PATH + "playlist.js", function() {
-  var album, cover, data, playList, song, songs, _i, _len;
+  var playList, url, _i, _len;
   playList = WIN['playList'];
-  for (album in playList) {
-    data = playList[album]['data'];
-    cover = data['cover'];
-    songs = data['songs'];
-    for (_i = 0, _len = songs.length; _i < _len; _i++) {
-      song = songs[_i];
-      musicList.push({
-        'cover': cover,
-        'url': song['url']
-      });
-    }
+  for (_i = 0, _len = playList.length; _i < _len; _i++) {
+    url = playList[_i];
+    musicList.push({
+      cover: "",
+      url: STATIC_PATH + url
+    });
   }
   originMusicList = musicList.concat();
   return originMusicList.shift();

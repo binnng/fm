@@ -77,7 +77,8 @@ audio = ( ->
     icon.className = ''
 
   setCover = ->
-    player.setAttribute('style', 'background-image: url(' + musicList[currentMusicOrder]['cover'] + ');')
+    cover = musicList[currentMusicOrder]['cover']
+    player.setAttribute('style', 'background-image: url(' + cover + ');') if cover
 
   _audio.play = (isPaused) ->
 
@@ -123,15 +124,11 @@ playOrPause = ->
 getScript "#{STATIC_PATH}playlist.js", ->
   playList = WIN['playList']
 
-  for album of playList
-    data = playList[album]['data']
-    cover = data['cover']
-    songs = data['songs']
+  for url in playList
 
-    for song in songs
-      musicList.push
-        'cover': cover,
-        'url': song['url']
+    musicList.push
+      cover: "",
+      url: STATIC_PATH + url
 
   originMusicList = musicList.concat()
   originMusicList.shift()
@@ -141,7 +138,7 @@ player.onclick = playOrPause
 DOC.onkeyup = (e)->
   e = e or WIN.event
   keyCode = e.keyCode
-  # console.log keyCode
+  
   playOrPause() if keyCode is 32 # blank
   audio.prev() if keyCode is 37 # left
   audio.next() if keyCode is 39 # right

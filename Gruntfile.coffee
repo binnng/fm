@@ -15,7 +15,7 @@ exports = (grunt) ->
 
   grunt.registerTask "default", "fm"
 
-  rev = require("md5").digest_s grunt.template.today "yyyymmddss"
+  rev = grunt.template.today "yyyymmddss"
 
   path = 
     tmp: "tmp/"

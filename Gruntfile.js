@@ -8,7 +8,7 @@ exports = function(grunt) {
   require("time-grunt")(grunt);
   grunt.registerTask("fm", ["concat:fm", "cssmin:fm", "closure-compiler:fm", "htmlmin:fm", "regex-replace:fm"]);
   grunt.registerTask("default", "fm");
-  rev = require("md5").digest_s(grunt.template.today("yyyymmddss"));
+  rev = grunt.template.today("yyyymmddss");
   path = {
     tmp: "tmp/",
     jsdev: "scripts/",
