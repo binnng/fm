@@ -4,7 +4,7 @@ DOC = document
 STATIC_PATH = "statics/"
 IMAGE_PATH = "images/"
 
-$ = (id) -> document.getElementById(id)
+$ = document.getElementById.bind document
 
 getScript = (url, callback) ->
   head = DOC.getElementsByTagName('head')[0] or DOC.body
@@ -121,17 +121,17 @@ playOrPause = ->
   status = audio.status()
   if ( status is 'playing' or status is 'loading' ) then audio.pause() else audio.play(yes)
 
-getScript "#{STATIC_PATH}playlist.js", ->
-  playList = WIN['playList']
+# getScript "#{STATIC_PATH}playlist.js", ->
+#   playList = WIN['playList']
 
-  for url in playList
+#   for url in playList
 
-    musicList.push
-      cover: "",
-      url: STATIC_PATH + url
+#     musicList.push
+#       cover: "",
+#       url: STATIC_PATH + url
 
-  originMusicList = musicList.concat()
-  originMusicList.shift()
+#   originMusicList = musicList.concat()
+#   originMusicList.shift()
 
 player.onclick = playOrPause
 
@@ -143,10 +143,10 @@ DOC.onkeyup = (e)->
   audio.prev() if keyCode is 37 # left
   audio.next() if keyCode is 39 # right
 
-  copy = originMusicList.concat()
+  # copy = originMusicList.concat()
 
-  musicList = copy if keyCode is 65
-  musicList = copy.reverse() if keyCode is 68
-  ( musicList = copy.sort (a, b) -> Math.random() - 0.5 ) if keyCode is 83
+  # musicList = copy if keyCode is 65
+  # musicList = copy.reverse() if keyCode is 68
+  # ( musicList = copy.sort (a, b) -> Math.random() - 0.5 ) if keyCode is 83
 
-WIN["console"]?.log? "随机s, 顺序a, 倒序d"  
+#WIN["console"]?.log? "随机s, 顺序a, 倒序d"  
